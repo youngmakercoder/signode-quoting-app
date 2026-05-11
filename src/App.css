@@ -1,0 +1,22 @@
+.container {
+  max-width: 700px;
+  margin: 80px auto;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 18px;
+  background: #1f4e79;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+pre {
+  background: #f4f4f4;
+  padding: 16px;
+  border-radius: 8px;
+}
