@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { useMsal } from "@azure/msal-react";
+import { loginRequest } from "./authConfig";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const { instance, accounts } = useMsal();
 
-  async function loadUser() {
-    const response = await fetch("/.auth/me");
-    const data = await response.json();
-    setUser(data.clientPrincipal);
+  const user = accounts[0];
+
+  async function signIn() {
+    await instance.loginRedirect(loginRequest);
   }
 
-  useEffect(() => {
-    loadUser();
-  }, []);
+  async function signOut() {
+    await instance.logoutRedirect();
+  }
 
   return (
     <main className="container">
@@ -21,21 +22,22 @@ function App() {
       {!user ? (
         <>
           <p>You are not signed in.</p>
-          <a href="/.auth/login/aad" className="button">
+
+          <button onClick={signIn} className="button">
             Sign in with Microsoft Entra ID
-          </a>
+          </button>
         </>
       ) : (
         <>
           <p>Signed in as:</p>
-          <strong>{user.userDetails}</strong>
+          <strong>{user.username}</strong>
 
-          <h2>Roles</h2>
-          <pre>{JSON.stringify(user.userRoles, null, 2)}</pre>
+          <h2>MSAL account object</h2>
+          <pre>{JSON.stringify(user, null, 2)}</pre>
 
-          <a href="/.auth/logout" className="button">
+          <button onClick={signOut} className="button">
             Sign out
-          </a>
+          </button>
         </>
       )}
     </main>
