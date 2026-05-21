@@ -10,6 +10,9 @@ export const msalConfig = {
   },
 };
 
+
 export const loginRequest = {
-  scopes: ["openid", "profile", "email"],
+  scopes: [
+    "api://39cca72b-9679-41ee-87c4-67f52518e41b/access_as_user"
+  ],
 };
